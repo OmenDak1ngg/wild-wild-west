@@ -4,7 +4,6 @@ public class PlayerShooter : MonoBehaviour
 {
     [SerializeField] private float _shootLength = 1000f;
     [SerializeField] private UserInput _userInput;
-    [SerializeField] private LayerMask _shootLayerMask;
 
     private void OnEnable()
     {
@@ -23,7 +22,7 @@ public class PlayerShooter : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(shootCenter);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, _shootLength, _shootLayerMask))
+        if (Physics.Raycast(ray, out hit, _shootLength))
         {
             Debug.Log(hit.transform.name);
         }
