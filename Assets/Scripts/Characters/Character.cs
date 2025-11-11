@@ -3,10 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class Character : MonoBehaviour
 {
-    public Health Health { get; private set; }
+    [SerializeField] private Health _health;
 
-    protected virtual void Awake()
-    {
-        Health = GetComponent<Health>();
-    }
+    public Health Health => _health;
 }

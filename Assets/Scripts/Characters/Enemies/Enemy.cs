@@ -7,9 +7,8 @@ public class Enemy : Character
     private EnemyMover _mover;
     private EnemyDamageDealer _damageDealer;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _damageDealer = GetComponent<EnemyDamageDealer>();
         _mover = GetComponent<EnemyMover>();
     }

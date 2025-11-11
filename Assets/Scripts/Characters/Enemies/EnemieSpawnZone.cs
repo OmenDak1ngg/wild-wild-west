@@ -1,14 +1,50 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class EnemieSpawnZone : MonoBehaviour
 {
-    private Collider[] _colliders;
+    [SerializeField] private float _lengthSizeOfCollider;
+    [SerializeField] private BoxCollider[] _verticalColliders;
+    [SerializeField] private BoxCollider[] _horizontalColliders;
+
+    private int _colldidersPairCount = 2;
     private int _colliderIndex;
+    private BoxCollider[] _colliders;
 
     private void Awake()
     {
-        _colliders = GetComponents<Collider>();
+        _colliders.AddRange(_verticalColliders);
+        _colliders.AddRange(_horizontalColliders);
+    }
+    [ContextMenu("ResizeColliderLength")]
+    private void ResizeColliders()
+    {
+        BoxCollider verticalCollider;
+        BoxCollider horizontalCollider;
+
+        for (int i = 0; i < _colldidersPairCount; i++)
+        {
+            if (_lengthSizeOfCollider < 0)
+                _lengthSizeOfCollider *= 1;
+
+            verticalCollider = _verticalColliders[i];
+            horizontalCollider = _horizontalColliders[i];
+
+            verticalCollider.size = new Vector3(verticalCollider.size.x, verticalCollider.size.y, _lengthSizeOfCollider);
+            horizontalCollider.size = new Vector3(_lengthSizeOfCollider, horizontalCollider.size.y, horizontalCollider.size.z);
+
+
+            if (i > 0)
+                _lengthSizeOfCollider *= -1;
+
+            verticalCollider.center = new Vector3(_lengthSizeOfCollider / 2, verticalCollider.center.y, verticalCollider.center.z);
+            horizontalCollider.center = new Vector3(horizontalCollider.center.x, verticalCollider.center.y, _lengthSizeOfCollider / 2);
+
+            _verticalColliders[i] = verticalCollider;
+            _horizontalColliders[i] = horizontalCollider;
+        }
+
     }
 
     public Vector3 GetRandomPoint()

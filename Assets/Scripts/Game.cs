@@ -26,10 +26,12 @@ public class Game : MonoBehaviour
     {
         _endGameScreen.gameObject.SetActive(true);
         Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void StartGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         _endGameScreen.gameObject.SetActive(false);
         SceneManager.LoadScene(_scene.name);
     }
