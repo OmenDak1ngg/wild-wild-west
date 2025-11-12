@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -8,6 +9,9 @@ public class EnemySpawner : Spawner<Enemy>
     [SerializeField] private Player _player;
 
     private List<Enemy> _enemies;
+
+    public event Action Getted;
+    public event Action Released;
 
     private void OnDisable()
     {
@@ -39,6 +43,13 @@ public class EnemySpawner : Spawner<Enemy>
         pooledObject.Health.ResetHealth();
         base.OnGet(pooledObject);
         pooledObject.transform.position = _spawnZone.GetRandomPoint();
+        Getted?.Invoke();
+    }
+
+    protected override void OnRelease(Enemy pooledObject)
+    {
+        base.OnRelease(pooledObject);
+        Released?.Invoke();
     }
 
     public void SpawnEnemies(int countEnemies)
