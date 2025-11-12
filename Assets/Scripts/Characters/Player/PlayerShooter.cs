@@ -4,6 +4,7 @@ public class PlayerShooter : MonoBehaviour
 {
     [SerializeField] private float _shootLength = 1000f;
     [SerializeField] private UserInput _userInput;
+    [SerializeField] private int _damage = 5;
 
     private void OnEnable()
     {
@@ -24,7 +25,10 @@ public class PlayerShooter : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, _shootLength))
         {
-            Debug.Log(hit.transform.name);
+            if(hit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.Health.TakeDamage(_damage);
+            }
         }
     }
 }

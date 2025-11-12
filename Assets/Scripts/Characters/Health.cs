@@ -34,7 +34,6 @@ public class Health : MonoBehaviour
 
         if(_amount <= 0)
         {
-            Debug.Log($"dead  {transform.name}");
             Dead?.Invoke();
         }
     }

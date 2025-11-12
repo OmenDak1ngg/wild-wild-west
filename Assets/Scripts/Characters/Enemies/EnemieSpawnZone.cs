@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,10 +11,11 @@ public class EnemieSpawnZone : MonoBehaviour
 
     private int _colldidersPairCount = 2;
     private int _colliderIndex;
-    private BoxCollider[] _colliders;
+    private List<BoxCollider> _colliders;
 
     private void Awake()
     {
+        _colliders = new List<BoxCollider>();
         _colliders.AddRange(_verticalColliders);
         _colliders.AddRange(_horizontalColliders);
     }
@@ -49,7 +51,7 @@ public class EnemieSpawnZone : MonoBehaviour
 
     public Vector3 GetRandomPoint()
     {
-        _colliderIndex = Random.Range(0,_colliders.Length);
+        _colliderIndex = Random.Range(0,_colliders.Count);
         Collider randomCollider = _colliders[_colliderIndex];   
 
         return new Vector3(
