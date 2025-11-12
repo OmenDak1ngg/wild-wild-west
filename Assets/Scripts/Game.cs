@@ -22,6 +22,11 @@ public class Game : MonoBehaviour
         _restartButton.Clicked -= StartGame;
     }
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;    
+    }
+
     private void StopGame()
     {
         _endGameScreen.gameObject.SetActive(true);
@@ -32,7 +37,6 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1f;
-        Debug.Log(Time.timeScale + "игра начата");
         Cursor.lockState = CursorLockMode.Locked;
         _endGameScreen.gameObject.SetActive(false);
         SceneManager.LoadScene(_scene.name);
