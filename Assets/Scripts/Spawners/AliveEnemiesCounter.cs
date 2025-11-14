@@ -14,7 +14,7 @@ public class AliveEnemiesCounter : MonoBehaviour
     private void OnEnable()
     {
         _enemySpawner.Getted += IncreaseCount;
-        _enemySpawner.Released -= DecreaseCount;
+        _enemySpawner.Released += DecreaseCount;
     }
 
     private void OnDisable()
@@ -36,7 +36,7 @@ public class AliveEnemiesCounter : MonoBehaviour
     private void DecreaseCount()
     {
         _count--;
-        
+        Debug.Log($"Count {_count}");
         if(_count == 0 )
             NoEnemiesLeft?.Invoke();
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -12,45 +13,45 @@ public class EnemyWaveStarter : MonoBehaviour
     [SerializeField] private WaveCounter _waveCounter;
     [SerializeField] private AliveEnemiesCounter _aliveEnemiesCount;
 
-
     private WaitForSeconds _waitBetweenWaves;
-    private int _countOfEnemies;
+
+    public float DelayBetweenWaves => _delayBetweenWaves;
+
+    public event Action DelayStarted;
 
     private void OnEnable()
     {
-        _aliveEnemiesCount.NoEnemiesLeft += StartCoroutineWave;
+        _aliveEnemiesCount.NoEnemiesLeft += StartWaveCoroutine;
     }
 
     private void OnDisable()
     {
-        _aliveEnemiesCount.NoEnemiesLeft -= StartCoroutineWave;
+        _aliveEnemiesCount.NoEnemiesLeft -= StartWaveCoroutine;
     }
 
     private void Awake()
     {
         _waitBetweenWaves = new WaitForSeconds(_delayBetweenWaves);
-        _countOfEnemies = Random.Range(_minEnemies, _maxEnemies);
     }
 
     private void Start()
     {
-        StartWave(_countOfEnemies);
+        StartWaveCoroutine();
     }
 
-    private void StartWave(int enemiesCount)
-    {
-        _spawner.SpawnEnemies(enemiesCount);
-        _waveCounter.IncreaseCount();
-    }
-
-    private void StartCoroutineWave()
+    private void StartWaveCoroutine()
     {
         StartCoroutine(StartWaveWithDelay());
     }
 
     private IEnumerator StartWaveWithDelay()
     {
+        DelayStarted?.Invoke(); 
+
         yield return _waitBetweenWaves;
-        StartWave(_countOfEnemies);
+
+        int countOfEnemies = UnityEngine.Random.Range(_minEnemies, _maxEnemies);
+        _spawner.SpawnEnemies(countOfEnemies);
+        _waveCounter.IncreaseCount();
     }
 }

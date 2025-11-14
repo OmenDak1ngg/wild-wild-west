@@ -49,6 +49,7 @@ public class EnemySpawner : Spawner<Enemy>
     protected override void OnRelease(Enemy pooledObject)
     {
         base.OnRelease(pooledObject);
+        Debug.Log("Released");
         Released?.Invoke();
     }
 
