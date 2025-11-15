@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 public class EnemyWaveStarter : MonoBehaviour
 {
     [SerializeField] private int _minEnemies = 3;

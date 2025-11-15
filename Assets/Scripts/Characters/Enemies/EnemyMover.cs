@@ -24,14 +24,14 @@ public class EnemyMover : MonoBehaviour
     private void Update()
     {
         if(_coroutine == null)
-            _coroutine = StartCoroutine(MoveToTarget(_targetTransform.position));
+            _coroutine = StartCoroutine(MoveToTarget());
     }
 
-    private IEnumerator MoveToTarget(Vector3 targetPosition)
+    private IEnumerator MoveToTarget()
     {
         while (Vector3.SqrMagnitude(transform.position - _targetTransform.position) > _treshold)
         {
-            _agent.SetDestination(targetPosition);
+            _agent.SetDestination(_targetTransform.position);
 
             yield return null;
         }

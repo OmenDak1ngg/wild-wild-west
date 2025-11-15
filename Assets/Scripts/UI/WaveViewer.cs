@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 
-public class WaveCounterViewer : MonoBehaviour
+public class WaveViewer : MonoBehaviour
 {
     [SerializeField] private WaveCounter _counter;
     [SerializeField] private TextMeshProUGUI _tmp;
